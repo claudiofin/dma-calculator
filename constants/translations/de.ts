@@ -151,5 +151,6 @@ export const de = {
     disclaimer_factor1: 'Spezifische Vereinbarungen mit dem Entwickler',
     disclaimer_factor2: 'Spezielle App-Kategorien (Spiele, Medien, etc.)',
     disclaimer_factor3: 'Temporäre Aktionen',
+    disclaimer_vat: '⚠️ MwSt: Berechnungen basieren auf Preisen ohne MwSt. MwSt-Sätze variieren je EU-Land (19-27%) und werden separat von den Stores verwaltet. Dies beeinflusst nicht den Modellvergleich.',
     disclaimer_warning: 'Dies stellt keine Steuer-, Rechts- oder Geschäftsberatung dar. Konsultiere einen Fachmann.',
 };

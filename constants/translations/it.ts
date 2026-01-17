@@ -151,5 +151,6 @@ export const it = {
     disclaimer_factor1: 'Accordi specifici con il developer',
     disclaimer_factor2: 'Categorie speciali di app (giochi, media, ecc.)',
     disclaimer_factor3: 'Promozioni temporanee',
+    disclaimer_vat: '⚠️ IVA: I calcoli sono basati su prezzi al netto dell\'IVA. L\'IVA (VAT) varia per paese UE (19-27%) ed è gestita separatamente dagli store. Non influisce sul confronto tra modelli.',
     disclaimer_warning: 'Non costituisce consulenza fiscale, legale o commerciale. Consulta un professionista prima di prendere decisioni basate su queste stime.',
 };

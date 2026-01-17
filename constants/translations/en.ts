@@ -151,5 +151,6 @@ export const en = {
     disclaimer_factor1: 'Specific agreements with the developer',
     disclaimer_factor2: 'Special app categories (games, media, etc.)',
     disclaimer_factor3: 'Temporary promotions',
+    disclaimer_vat: '⚠️ VAT: Calculations are based on prices excluding VAT. VAT rates vary by EU country (19-27%) and are handled separately by stores. This does not affect the comparison between models.',
     disclaimer_warning: 'This does not constitute tax, legal, or commercial advice. Consult a professional before making decisions based on these estimates.',
 };

@@ -104,6 +104,8 @@ export const FAQSection = () => {
                     {'\n'}• {t('disclaimer_factor2')}
                     {'\n'}• {t('disclaimer_factor3')}
                     {'\n\n'}
+                    {t('disclaimer_vat')}
+                    {'\n\n'}
                     {t('disclaimer_warning')}
                 </Text>
             </View>
