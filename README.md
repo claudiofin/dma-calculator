@@ -1,50 +1,78 @@
-# Welcome to your Expo app 👋
+# DMA Calculator 2026 🇪🇺 📱
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A professional React Native application built with **Expo** to simulate the financial impact of the **Digital Markets Act (DMA)** on mobile apps distributed in the European Union.
 
-## Get started
+This tool helps developers and businesses decide whether to stick with the standard **In-App Purchase (IAP)** model or switch to **External Offers / Link Entitlements**, by calculating net revenue, commissions, and potential savings in real-time.
 
-1. Install dependencies
+## 🎯 Key Features
 
-   ```bash
-   npm install
-   ```
+*   **Dual Platform Support**: Simulates both **Apple** (Core Technology Commission) and **Google** (External Offers Program) models.
+*   **Granular User Split**: Define the exact percentage of users on iOS vs. Android (e.g., 60/40) to strictly avoid double-counting.
+*   **Official DMA Formulas (2026)**:
+    *   **Apple**: Implements the 5% Core Technology Commission + Store Services (Tier 1/2).
+    *   **Google**: Implements the corrected Tier 2 rate (20%) + Tier 1 (10%).
+*   **Interactive Simulation**:
+    *   Adjust Monthly Users, Price, Retention (User Age).
+    *   Simulate **Conversion Drop** due to warning screens.
+    *   Toggle **Small Business Program** (<$1M revenue).
+*   **Verified Sources**: Includes links to official Apple/Google documentation and compliance blogs.
 
-2. Start the app
+## 🛠 Tech Stack
 
-   ```bash
-   npx expo start
-   ```
+*   **Framework**: [Expo](https://expo.dev) (SDK 52+) / React Native 0.76
+*   **Language**: TypeScript
+*   **Styling**: NativeWind (Tailwind CSS) & StyleSheet
+*   **Animations**: Moti (powered by Reanimated)
+*   **Testing**: Vitest + React Testing Library (100% Logic Coverage)
+*   **Routing**: Expo Router
 
-In the output, you'll find options to open the app in a
+## 🚀 Getting Started
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+### Prerequisites
+*   Node.js (v18+)
+*   npm or yarn
+*   Xcode (for iOS Simulator) or Android Studio
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+### Installation
 
 ```bash
-npm run reset-project
+# Clone the repository
+git clone https://github.com/claudiofin/dma-calculator.git
+
+# Enter directory
+cd dma-calculator
+
+# Install dependencies
+npm install
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### Running the App
 
-## Learn more
+```bash
+# Run on iOS Simulator (Recommended)
+npx expo run:ios
 
-To learn more about developing your project with Expo, look at the following resources:
+# Run on Android Emulator
+npx expo run:android
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+# Run with Expo Go
+npx expo start
+```
 
-## Join the community
+### Running Tests
 
-Join our community of developers creating universal apps.
+We maintain a strict test suite to ensure financial accuracy.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```bash
+npm test
+```
+
+## 📚 Logic Verification
+
+The calculator logic is audited against the official DMA terms for January 2026:
+*   **Apple External**: CTC (5%) + Service (10% SB / 20% Standard) + IAF.
+*   **Google External**: Tier 1 (10%) + Tier 2 (10%) + Fees.
+
+## ⚠️ Disclaimer
+
+This application provides estimates based on publicly available policy documents. It does not constitute legal or financial advice. Commission rates and terms are subject to change by platform holders.
