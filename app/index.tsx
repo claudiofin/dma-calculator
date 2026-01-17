@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
-import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack, useRouter } from 'expo-router';
 import { BookOpen, Info } from 'lucide-react-native';
+import React, { useState } from 'react';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { useDMACalculator, StoreModel } from '../hooks/useDMACalculator';
-import { InputSlider } from '../components/InputSlider';
 import { ComparisonCard } from '../components/ComparisonCard';
-import { ThemeToggle } from '../components/ThemeToggle';
-import { LanguageSelector } from '../components/LanguageSelector';
-import { FAQSection } from '../components/FAQSection';
 import { CookieConsent } from '../components/CookieConsent';
+import { FAQSection } from '../components/FAQSection';
+import { InputSlider } from '../components/InputSlider';
+import { LanguageSelector } from '../components/LanguageSelector';
 import { OnboardingOverlay, OnboardingTrigger } from '../components/OnboardingOverlay';
+import { ThemeToggle } from '../components/ThemeToggle';
+import { StoreModel, useDMACalculator } from '../hooks/useDMACalculator';
 // Import CustomSwitch if needed, checking existing imports
-import { CustomSwitch } from '../components/CustomSwitch';
-import { GLOSSARY_KEYS } from '../constants/glossary';
-import { useLanguageStore, useTranslation } from '../constants/i18n';
+import { colors, getThemeColors, radius, shadows, spacing, typography } from '@/constants/design';
 import { useTheme } from '@/contexts/ThemeContext';
-import { colors, spacing, typography, radius, shadows, getThemeColors } from '@/constants/design';
+import { CustomSwitch } from '../components/CustomSwitch';
 import { SEOHead } from '../components/SEOHead';
+import { GLOSSARY_KEYS } from '../constants/glossary';
+import { useTranslation } from '../constants/i18n';
 
 type TabKey = 'Apple' | 'Google';
 
@@ -151,6 +151,9 @@ export default function HomeScreen() {
                     <Text style={styles.savingsNote}>
                         vs IAP Standard ({isSmallBusiness || isSubscriptionAfterYear ? '15' : '30'}%)
                     </Text>
+                    <Text style={styles.savingsExplanation}>
+                        {t('savings_comparison')}
+                    </Text>
                 </View>
 
                 {/* Input Card */}
@@ -160,7 +163,7 @@ export default function HomeScreen() {
                     </Text>
 
                     <InputSlider
-                        label={`${t('monthly_users')} (Totali)`}
+                        label={t('monthly_users_total')}
                         value={monthlyUsers}
                         onValueChange={setMonthlyUsers}
                         min={100}
@@ -169,7 +172,7 @@ export default function HomeScreen() {
                     />
 
                     <InputSlider
-                        label={`Split Piattaforme: iOS ${iosShare}% / Android ${100 - iosShare}%`}
+                        label={t('platform_split').replace('{ios}', String(iosShare)).replace('{android}', String(100 - iosShare))}
                         value={iosShare}
                         onValueChange={setIosShare}
                         min={0}
@@ -226,10 +229,10 @@ export default function HomeScreen() {
                     <View style={[styles.switchRow, { borderTopColor: themeColors.border }]}>
                         <View style={{ flex: 1 }}>
                             <Text style={[styles.switchLabel, { color: themeColors.text }]}>
-                                Abbonamento dopo 1° anno
+                                {t('subscription_after_year')}
                             </Text>
                             <Text style={[styles.switchDesc, { color: themeColors.textMuted }]}>
-                                IAP scende al 15% dopo il primo anno
+                                {t('subscription_after_year_desc')}
                             </Text>
                         </View>
                         <CustomSwitch
@@ -261,7 +264,7 @@ export default function HomeScreen() {
                                     styles.tabSubtitle,
                                     { color: activeTab === tab ? colors.primary : themeColors.textMuted }
                                 ]}>
-                                    {tab === 'Apple' ? iosUsers.toLocaleString() : androidUsers.toLocaleString()} utenti
+                                    {tab === 'Apple' ? iosUsers.toLocaleString() : androidUsers.toLocaleString()} {t('users')}
                                 </Text>
                             </View>
                         </Pressable>
@@ -305,7 +308,7 @@ export default function HomeScreen() {
                     style={[styles.actionButton, { backgroundColor: colors.primary }]}
                 >
                     <BookOpen size={20} color="#fff" />
-                    <Text style={styles.actionButtonText}>Guida all'Implementazione</Text>
+                    <Text style={styles.actionButtonText}>{t('implementation_guide')}</Text>
                 </Pressable>
 
                 <Pressable
@@ -313,7 +316,7 @@ export default function HomeScreen() {
                     style={[styles.secondaryButton, { backgroundColor: themeColors.surface, borderColor: themeColors.border }]}
                 >
                     <Text style={[styles.secondaryButtonText, { color: colors.primary }]}>
-                        {showGlossary ? 'Chiudi Glossario' : 'Apri Glossario'}
+                        {showGlossary ? t('close_glossary') : t('open_glossary')}
                     </Text>
                 </Pressable>
 
@@ -473,6 +476,13 @@ const styles = StyleSheet.create({
     savingsNote: {
         color: 'rgba(255,255,255,0.7)',
         fontSize: typography.xs,
+    },
+    savingsExplanation: {
+        color: 'rgba(255,255,255,0.6)',
+        fontSize: typography.xs,
+        marginTop: spacing.xs,
+        textAlign: 'center',
+        fontStyle: 'italic',
     },
     card: {
         borderRadius: radius.lg,

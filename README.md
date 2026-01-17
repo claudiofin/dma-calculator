@@ -73,6 +73,8 @@ The calculator logic is audited against the official DMA terms for January 2026:
 *   **Apple External**: CTC (5%) + Service (10% SB / 20% Standard) + IAF.
 *   **Google External**: Tier 1 (10%) + Tier 2 (10%) + Fees.
 
+📐 **[View Full Formula Documentation](./FORMULAS.md)** — Complete breakdown of all calculations, rates, and methodology with examples.
+
 ## ⚠️ Disclaimer
 
 This application provides estimates based on publicly available policy documents. It does not constitute legal or financial advice. Commission rates and terms are subject to change by platform holders.

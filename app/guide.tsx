@@ -1,12 +1,12 @@
-import React from 'react';
-import { View, Text, ScrollView, StyleSheet, Pressable, Linking } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Stack, useRouter } from 'expo-router';
-import { CheckCircle, XCircle, ExternalLink, ArrowRight } from 'lucide-react-native';
-import { useTranslation } from '../constants/i18n';
+import { colors, getThemeColors, radius, spacing, typography } from '@/constants/design';
 import { useTheme } from '@/contexts/ThemeContext';
-import { colors, spacing, typography, radius, getThemeColors } from '@/constants/design';
+import { Stack, useRouter } from 'expo-router';
+import { ExternalLink } from 'lucide-react-native';
+import React from 'react';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { OnboardingTrigger } from '../components/OnboardingOverlay';
+import { useTranslation } from '../constants/i18n';
 import { openLink } from '../utils/openLink';
 
 export default function GuideScreen() {
@@ -16,61 +16,41 @@ export default function GuideScreen() {
     const themeColors = getThemeColors(isDark);
 
     const STEPS = [
-        {
-            title: '1. Scegli il Modello di Business',
-            desc: 'Decidi se rimanere nel sistema IAP (In-App Purchase) o utilizzare link esterni per i pagamenti sul web.',
-            icon: '📱'
-        },
-        {
-            title: '2. Implementa gli External Link',
-            desc: 'Se scegli lo store esterno, devi implementare gli "External Purchase Link Entitlements" (Apple) o "External Offers" (Google). Questo richiede di mostrare uno schermo di avviso all\'utente.',
-            icon: '🔗'
-        },
-        {
-            title: '3. Gestisci lo Warning Screen',
-            desc: 'L\'utente vedrà un avviso che sta lasciando l\'app. Questo riduce la conversione (stimata -15/30%). Ottimizza il design per rassicurarlo.',
-            icon: '⚠️'
-        },
-        {
-            title: '4. Pagamento Web (Stripe)',
-            desc: 'L\'utente atterra sul tuo sito. Qui i costi di transazione sono molto più bassi (es. Stripe ~2.9% vs Apple 30%).',
-            icon: '💳'
-        },
-        {
-            title: '5. Calcolo della Commissione',
-            desc: 'A fine mese, Apple/Google ti invieranno una fattura per le commissioni dovute (CTC + Store Services) sulle vendite digitali tracciate.',
-            icon: '📊'
-        }
+        { title: t('guide_step1_title'), desc: t('guide_step1_desc'), icon: '📱' },
+        { title: t('guide_step2_title'), desc: t('guide_step2_desc'), icon: '🔗' },
+        { title: t('guide_step3_title'), desc: t('guide_step3_desc'), icon: '⚠️' },
+        { title: t('guide_step4_title'), desc: t('guide_step4_desc'), icon: '💳' },
+        { title: t('guide_step5_title'), desc: t('guide_step5_desc'), icon: '📊' },
     ];
 
     const APPLE_ENROLLMENT = [
-        'Accedi a App Store Connect',
-        'Vai su Agreements → "Alternative Terms Addendum for Apps in the EU"',
-        'Firma l\'addendum (richiede Account Holder)',
-        'In Xcode, aggiungi l\'entitlement: com.apple.developer.storekit.external-purchase-link',
-        'Implementa le StoreKit External Purchase APIs',
-        'Invia l\'app per review',
+        t('guide_apple_step1'),
+        t('guide_apple_step2'),
+        t('guide_apple_step3'),
+        t('guide_apple_step4'),
+        t('guide_apple_step5'),
+        t('guide_apple_step6'),
     ];
 
     const GOOGLE_ENROLLMENT = [
-        'Accedi a Google Play Console',
-        'Vai su Policy → External Offers Program',
-        'Completa la registrazione come Business',
-        'Scegli il Service Tier (1 o 2)',
-        'Integra le External Offers APIs',
-        'Reporta le transazioni entro 24 ore',
+        t('guide_google_step1'),
+        t('guide_google_step2'),
+        t('guide_google_step3'),
+        t('guide_google_step4'),
+        t('guide_google_step5'),
+        t('guide_google_step6'),
     ];
 
     const SOURCES = [
         { label: 'Apple: DMA & Apps in the EU (Hub)', url: 'https://developer.apple.com/support/dma-and-apps-in-the-eu/' },
-        { label: 'Google: Play Support (Cerca "External Offers")', url: 'https://support.google.com/googleplay/android-developer/' },
+        { label: 'Google: Play Support (External Offers)', url: 'https://support.google.com/googleplay/android-developer/' },
         { label: 'Apple: Core Technology Fee Info', url: 'https://developer.apple.com/support/dma-and-apps-in-the-eu/#ctf' },
     ];
 
     return (
         <SafeAreaView style={[styles.container, { backgroundColor: themeColors.background }]}>
             <Stack.Screen options={{
-                title: 'Guida',
+                title: t('guide_title'),
                 headerStyle: { backgroundColor: colors.primary },
                 headerTintColor: '#fff',
             }} />
@@ -82,10 +62,10 @@ export default function GuideScreen() {
                 </View>
 
                 <Text style={[styles.pageTitle, { color: themeColors.text }]}>
-                    Come Funziona il DMA?
+                    {t('guide_page_title')}
                 </Text>
                 <Text style={[styles.pageSubtitle, { color: themeColors.textSecondary }]}>
-                    Una guida passo-passo per integrare i pagamenti esterni e risparmiare sulle commissioni.
+                    {t('guide_page_subtitle')}
                 </Text>
 
                 {/* Steps */}
@@ -107,43 +87,35 @@ export default function GuideScreen() {
                 {/* When External Links are Allowed */}
                 <View style={[styles.sectionCard, { backgroundColor: themeColors.surface, borderColor: themeColors.border }]}>
                     <Text style={[styles.sectionTitle, { color: themeColors.text }]}>
-                        🤔 Quando Conviene External Purchase?
+                        {t('guide_when_title')}
                     </Text>
 
-                    <Text style={[styles.listHeader, { color: colors.success }]}>✅ Conviene se:</Text>
-                    <Text style={[styles.listItem, { color: themeColors.textSecondary }]}>• Non sei Small Business (30% → ~15%)</Text>
-                    <Text style={[styles.listItem, { color: themeColors.textSecondary }]}>• Hai già un sistema di pagamento web consolidato</Text>
-                    <Text style={[styles.listItem, { color: themeColors.textSecondary }]}>• La tua app ha alta retention/fidelizzazione</Text>
+                    <Text style={[styles.listHeader, { color: colors.success }]}>{t('guide_pros_title')}</Text>
+                    <Text style={[styles.listItem, { color: themeColors.textSecondary }]}>• {t('guide_pros_1')}</Text>
+                    <Text style={[styles.listItem, { color: themeColors.textSecondary }]}>• {t('guide_pros_2')}</Text>
+                    <Text style={[styles.listItem, { color: themeColors.textSecondary }]}>• {t('guide_pros_3')}</Text>
 
-                    <Text style={[styles.listHeader, { color: colors.error, marginTop: spacing.md }]}>❌ NON conviene se:</Text>
-                    <Text style={[styles.listItem, { color: themeColors.textSecondary }]}>• Sei già Small Business (15% vs ~13%)</Text>
-                    <Text style={[styles.listItem, { color: themeColors.textSecondary }]}>• La tua conversione è molto sensibile ai warning</Text>
-                    <Text style={[styles.listItem, { color: themeColors.textSecondary }]}>• Non hai infrastruttura per gestire pagamenti</Text>
+                    <Text style={[styles.listHeader, { color: colors.error, marginTop: spacing.md }]}>{t('guide_cons_title')}</Text>
+                    <Text style={[styles.listItem, { color: themeColors.textSecondary }]}>• {t('guide_cons_1')}</Text>
+                    <Text style={[styles.listItem, { color: themeColors.textSecondary }]}>• {t('guide_cons_2')}</Text>
+                    <Text style={[styles.listItem, { color: themeColors.textSecondary }]}>• {t('guide_cons_3')}</Text>
                 </View>
 
                 {/* Rules */}
                 <View style={[styles.sectionCard, { backgroundColor: colors.warningBg, borderColor: colors.warning }]}>
                     <Text style={[styles.sectionTitle, { color: '#92400e' }]}>
-                        ⚠️ Regole Importanti
+                        {t('guide_rules_title')}
                     </Text>
-                    <Text style={[styles.ruleText, { color: '#92400e' }]}>
-                        • NON puoi offrire IAP + External insieme nella stessa app
-                    </Text>
-                    <Text style={[styles.ruleText, { color: '#92400e' }]}>
-                        • Solo per utenti nell'Unione Europea (EEA)
-                    </Text>
-                    <Text style={[styles.ruleText, { color: '#92400e' }]}>
-                        • Devi mostrare il warning screen obbligatorio
-                    </Text>
-                    <Text style={[styles.ruleText, { color: '#92400e' }]}>
-                        • Devi reportare TUTTE le transazioni a Apple/Google
-                    </Text>
+                    <Text style={[styles.ruleText, { color: '#92400e' }]}>• {t('guide_rule_1')}</Text>
+                    <Text style={[styles.ruleText, { color: '#92400e' }]}>• {t('guide_rule_2')}</Text>
+                    <Text style={[styles.ruleText, { color: '#92400e' }]}>• {t('guide_rule_3')}</Text>
+                    <Text style={[styles.ruleText, { color: '#92400e' }]}>• {t('guide_rule_4')}</Text>
                 </View>
 
                 {/* Apple Enrollment */}
                 <View style={[styles.sectionCard, { backgroundColor: themeColors.surface, borderColor: themeColors.border }]}>
                     <Text style={[styles.sectionTitle, { color: themeColors.text }]}>
-                        🍎 Come Aderire - Apple
+                        {t('guide_apple_title')}
                     </Text>
                     {APPLE_ENROLLMENT.map((step, idx) => (
                         <View key={idx} style={styles.enrollmentStep}>
@@ -156,7 +128,7 @@ export default function GuideScreen() {
                 {/* Google Enrollment */}
                 <View style={[styles.sectionCard, { backgroundColor: themeColors.surface, borderColor: themeColors.border }]}>
                     <Text style={[styles.sectionTitle, { color: themeColors.text }]}>
-                        🤖 Come Aderire - Google
+                        {t('guide_google_title')}
                     </Text>
                     {GOOGLE_ENROLLMENT.map((step, idx) => (
                         <View key={idx} style={styles.enrollmentStep}>
@@ -168,7 +140,7 @@ export default function GuideScreen() {
 
                 {/* Sources */}
                 <View style={[styles.sourcesCard, { backgroundColor: themeColors.surface, borderColor: themeColors.border }]}>
-                    <Text style={[styles.sourcesTitle, { color: themeColors.text }]}>🔗 Fonti Ufficiali</Text>
+                    <Text style={[styles.sourcesTitle, { color: themeColors.text }]}>{t('guide_sources_title')}</Text>
                     {SOURCES.map((source, idx) => (
                         <Pressable key={idx} onPress={() => openLink(source.url)} style={styles.sourceRow}>
                             <Text style={[styles.sourceLink, { color: colors.primary }]}>

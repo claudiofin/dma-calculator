@@ -11,7 +11,7 @@
     "web": "expo start --web",
     "test": "vitest",
     "lint": "expo lint",
-    "deploy": "gh-pages -d dist",
+    "deploy": "touch dist/.nojekyll && gh-pages -d dist --dotfiles",
     "predeploy": "expo export -p web"
   },
   "dependencies": {

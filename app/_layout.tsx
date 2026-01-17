@@ -2,11 +2,10 @@ import { DarkTheme, DefaultTheme, ThemeProvider as NavThemeProvider } from '@rea
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
+import '../global.css';
 import { ThemeProvider, useTheme } from '@/contexts/ThemeContext';
 
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
+// Removed unstable_settings pointing to deleted tabs
 
 function AppContent() {
   const { isDark } = useTheme();
