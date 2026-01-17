@@ -63,7 +63,7 @@ export default function GuideScreen() {
 
     const SOURCES = [
         { label: 'Apple: DMA & Apps in the EU (Hub)', url: 'https://developer.apple.com/support/dma-and-apps-in-the-eu/' },
-        { label: 'Google: Complying with DMA (Official Blog)', url: 'https://android-developers.googleblog.com/2024/03/complying-with-digital-markets-act.html' },
+        { label: 'Google: Play Support (Cerca "External Offers")', url: 'https://support.google.com/googleplay/android-developer/' },
         { label: 'Apple: Core Technology Fee Info', url: 'https://developer.apple.com/support/dma-and-apps-in-the-eu/#ctf' },
     ];
 

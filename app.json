@@ -25,7 +25,7 @@
     },
     "web": {
       "bundler": "metro",
-      "output": "static",
+      "output": "single",
       "favicon": "./assets/images/favicon.png",
       "name": "DMA Calculator 2026",
       "shortName": "DMA Calc",
@@ -54,7 +54,8 @@
     ],
     "experiments": {
       "typedRoutes": true,
-      "reactCompiler": true
+      "reactCompiler": true,
+      "baseUrl": "/dma-calculator"
     }
   }
 }
