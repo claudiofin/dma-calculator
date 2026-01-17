@@ -3,7 +3,8 @@ export const fr = {
     app_title: 'DMA Calculator 2026',
     app_subtitle: 'Simulez les coûts App Store & Play Store en Europe.',
     annual_savings: 'ÉCONOMIES ANNUELLES',
-    savings_comparison: "Économies en passant de l'IAP Standard au modèle External sélectionné",
+    savings_comparison_external: "Économies vs IAP Standard avec le modèle External sélectionné",
+    savings_comparison_iap: "Pas d'économies - vous utilisez déjà IAP Standard",
     monthly_savings: 'Économies: {amount}/mois',
 
     // Inputs

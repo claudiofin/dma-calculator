@@ -152,7 +152,9 @@ export default function HomeScreen() {
                         vs IAP Standard ({isSmallBusiness || isSubscriptionAfterYear ? '15' : '30'}%)
                     </Text>
                     <Text style={styles.savingsExplanation}>
-                        {t('savings_comparison')}
+                        {(appleModel === 'iap-standard' && googleModel === 'iap-standard')
+                            ? t('savings_comparison_iap')
+                            : t('savings_comparison_external')}
                     </Text>
                 </View>
 
