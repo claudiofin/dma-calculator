@@ -1,0 +1,116 @@
+import { renderHook } from '@testing-library/react-native';
+import { useDMACalculator } from '../hooks/useDMACalculator';
+
+// Mock i18n store to return raw keys or predictable strings
+jest.mock('../constants/i18n', () => ({
+    useLanguageStore: () => ({
+        t: (key: string, options?: any) => key + (options ? JSON.stringify(options) : ''),
+    }),
+}));
+
+describe('useDMACalculator', () => {
+
+    it('calculates Apple IAP Standard correctly (Small Business)', () => {
+        const { result } = renderHook(() => useDMACalculator({
+            monthlyUsers: 1000,
+            monthlyPrice: 10,
+            conversionImpact: 0,
+            userAgeMonths: 12,
+            isSmallBusiness: true
+        }));
+
+        const apple = result.current.calculateApple('iap-standard');
+        // 15% commission
+        expect(apple.rate).toBe(15);
+        expect(apple.cost).toBe(1000 * 10 * 0.15);
+        expect(apple.net).toBe(1000 * 10 * 0.85);
+    });
+
+    it('calculates Apple IAP Standard correctly (Big Business)', () => {
+        const { result } = renderHook(() => useDMACalculator({
+            monthlyUsers: 1000,
+            monthlyPrice: 10,
+            conversionImpact: 0,
+            userAgeMonths: 12,
+            isSmallBusiness: false
+        }));
+
+        const apple = result.current.calculateApple('iap-standard');
+        // 30% commission
+        expect(apple.rate).toBe(30);
+    });
+
+    it('calculates Apple External Tier 1 correctly (Small Biz, New User)', () => {
+        const { result } = renderHook(() => useDMACalculator({
+            monthlyUsers: 1000,
+            monthlyPrice: 10,
+            conversionImpact: 0,
+            userAgeMonths: 1, // New User
+            isSmallBusiness: true
+        }));
+
+        const apple = result.current.calculateApple('external-tier1');
+
+        // Components:
+        // IAF: 0% (Small Biz Exempt)
+        // Tier 1 Services: 5%
+        // CTC: 5%
+        // Stripe: 2.9%
+        // Total: 12.9%
+        expect(apple.rate).toBeCloseTo(12.9);
+    });
+
+    it('calculates Apple External Tier 1 correctly (Big Biz, New User)', () => {
+        const { result } = renderHook(() => useDMACalculator({
+            monthlyUsers: 1000,
+            monthlyPrice: 10,
+            conversionImpact: 0,
+            userAgeMonths: 1, // New User
+            isSmallBusiness: false
+        }));
+
+        const apple = result.current.calculateApple('external-tier1');
+
+        // Components:
+        // IAF: 2% (Big Biz pays)
+        // Tier 1 Services: 5%
+        // CTC: 5%
+        // Stripe: 2.9%
+        // Total: 14.9%
+        expect(apple.rate).toBeCloseTo(14.9);
+    });
+
+    it('calculates Google External Tier 1 (New User)', () => {
+        const { result } = renderHook(() => useDMACalculator({
+            monthlyUsers: 1000,
+            monthlyPrice: 10,
+            conversionImpact: 0,
+            userAgeMonths: 1,
+            isSmallBusiness: true
+        }));
+
+        const google = result.current.calculateGoogle('external-tier1');
+
+        // Components:
+        // IAF: 3% (Always pays for first 6 months)
+        // Tier 1 Services: 10%
+        // Stripe: 2.9%
+        // Total: 15.9%
+        expect(google.rate).toBeCloseTo(15.9);
+    });
+
+    it('applies conversion impact to revenues', () => {
+        const { result } = renderHook(() => useDMACalculator({
+            monthlyUsers: 100,
+            monthlyPrice: 10,
+            conversionImpact: 20, // 20% drop
+            userAgeMonths: 12,
+            isSmallBusiness: true
+        }));
+
+        const { metrics } = result.current;
+        expect(metrics.monthlyRevenue).toBe(1000);
+        expect(metrics.adjustedRevenue).toBe(800); // 1000 - 20%
+    });
+
+});

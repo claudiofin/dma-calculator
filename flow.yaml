@@ -1,0 +1,19 @@
+appId: com.antigravity.dmacalculator
+---
+- launchApp
+- assertVisible: "DMA Calculator 2026"
+- assertVisible: "Business Parameters"
+
+# Test Interaction
+- tapOn: "Annual Revenue < 1M (for Apple)" # Toggle Small Business
+- scrollUntilVisible:
+    element:
+      text: "Open Term Glossary"
+    direction: DOWN
+
+- tapOn: "Open Term Glossary"
+- assertVisible: "Digital Markets Act"
+
+- tapOn: "Read Implementation Guide"
+- assertVisible: "1. Choose Business Model"
+- back

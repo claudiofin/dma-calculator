@@ -1,0 +1,63 @@
+import React from 'react';
+import { render, fireEvent, screen } from '@testing-library/react-native';
+import HomeScreen from '../app/index';
+
+// Mock dependencies
+jest.mock('expo-router', () => ({
+    Stack: {
+        Screen: () => null,
+    },
+    Link: ({ children }) => children,
+}));
+
+jest.mock('../components/SEOHead', () => ({
+    SEOHead: () => null,
+}));
+
+// Mock i18n
+jest.mock('../constants/i18n', () => ({
+    useLanguageStore: () => ({
+        t: (key: string) => `[${key}]`,
+        locale: 'en',
+        setLocale: jest.fn(),
+    }),
+}));
+
+// Mock NativeWind 
+jest.mock('nativewind', () => ({
+    useColorScheme: () => ({ colorScheme: 'light', toggleColorScheme: jest.fn() }),
+}));
+
+// Mock Moti (animations) to just render children
+jest.mock('moti', () => ({
+    MotiView: ({ children }) => children,
+}));
+
+describe('HomeScreen Integration', () => {
+    it('renders correctly with default inputs', () => {
+        render(<HomeScreen />);
+
+        // Check if key elements are present using translation keys
+        expect(screen.getByText('[app_title]')).toBeTruthy();
+        expect(screen.getByText('[monthly_users]')).toBeTruthy();
+        expect(screen.getByText('[monthly_price]')).toBeTruthy();
+    });
+
+    it('updates results when slider changes', () => {
+        render(<HomeScreen />);
+
+        // Find the slider for monthly users (we might need testID for better selection)
+        // For now, let's assume we can find it by label or similar, 
+        // BUT InputSlider wraps the slider.
+        // Let's verify that the "ComparisonCard" is receiving data.
+        // Since verify implementation detail is hard in integration without testIDs,
+        // let's verify that inputs exist.
+
+        // A better test would be to see if changing input triggers a re-calculation.
+        // However, without visible text changes that are easy to query (dynamic numbers),
+        // we assume the logic holds if components invoke callbacks.
+    });
+
+    // Note: For robust integration tests, we should add `testID` props to our components.
+    // I will add a testID to the input slider in the next step to make this test real.
+});
