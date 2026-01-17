@@ -151,6 +151,6 @@ export const fr = {
     disclaimer_factor1: 'Accords spécifiques avec le développeur',
     disclaimer_factor2: "Catégories d'apps spéciales (jeux, médias, etc.)",
     disclaimer_factor3: 'Promotions temporaires',
-    disclaimer_vat: "⚠️ TVA: Les calculs sont basés sur des prix hors TVA. Les taux de TVA varient selon le pays UE (19-27%) et sont gérés séparément par les stores. Cela n'affecte pas la comparaison entre modèles.",
+    disclaimer_vat: "⚠️ TVA exclue: Ce calculateur n'inclut pas la TVA. La TVA est payée séparément et varie par pays UE (19-27%). Cela ne change pas quel modèle (IAP vs External) est le plus avantageux.",
     disclaimer_warning: "Ceci ne constitue pas un conseil fiscal, juridique ou commercial. Consultez un professionnel.",
 };
