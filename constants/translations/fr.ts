@@ -21,6 +21,10 @@ export const fr = {
     small_business_warning: '⚠️ Revenus > 1M$. Vous pourriez ne pas qualifier pour Small Business.',
     subscription_after_year: 'Abonnement après la 1ère année',
     subscription_after_year_desc: 'IAP descend à 15% après la première année',
+    purchase_type: "Type d'Achat",
+    subscription: 'Abonnement',
+    one_time: 'Achat Unique',
+    purchase_type_desc: 'Affecte les frais Google Tier 2 (+3% ou +10%)',
     users: 'utilisateurs',
 
     // Stores

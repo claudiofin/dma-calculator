@@ -35,6 +35,7 @@ export default function HomeScreen() {
     const [userAgeMonths, setUserAgeMonths] = useState(0);
     const [isSmallBusiness, setIsSmallBusiness] = useState(true);
     const [isSubscriptionAfterYear, setIsSubscriptionAfterYear] = useState(false);
+    const [purchaseType, setPurchaseType] = useState<'subscription' | 'one-time'>('subscription');
     const [showGlossary, setShowGlossary] = useState(false);
     const [activeTab, setActiveTab] = useState<TabKey>('Apple');
 
@@ -47,7 +48,8 @@ export default function HomeScreen() {
         conversionImpact,
         userAgeMonths,
         isSmallBusiness,
-        isSubscriptionAfterYear
+        isSubscriptionAfterYear,
+        purchaseType
     });
 
     // Platform Split Logic
@@ -241,6 +243,48 @@ export default function HomeScreen() {
                             value={isSubscriptionAfterYear}
                             onValueChange={setIsSubscriptionAfterYear}
                         />
+                    </View>
+
+                    {/* Purchase Type Selector - Affects Google Tier 2 */}
+                    <View style={[styles.switchRow, { borderTopColor: themeColors.border }]}>
+                        <View style={{ flex: 1 }}>
+                            <Text style={[styles.switchLabel, { color: themeColors.text }]}>
+                                {t('purchase_type')}
+                            </Text>
+                            <Text style={[styles.switchDesc, { color: themeColors.textMuted }]}>
+                                {t('purchase_type_desc')}
+                            </Text>
+                        </View>
+                    </View>
+                    <View style={[styles.purchaseTypeSelector, { backgroundColor: themeColors.borderSubtle }]}>
+                        <Pressable
+                            onPress={() => setPurchaseType('subscription')}
+                            style={[
+                                styles.purchaseTypeButton,
+                                purchaseType === 'subscription' && { backgroundColor: themeColors.surface, ...shadows.sm }
+                            ]}
+                        >
+                            <Text style={[
+                                styles.purchaseTypeText,
+                                { color: purchaseType === 'subscription' ? colors.primary : themeColors.textSecondary }
+                            ]}>
+                                {t('subscription')}
+                            </Text>
+                        </Pressable>
+                        <Pressable
+                            onPress={() => setPurchaseType('one-time')}
+                            style={[
+                                styles.purchaseTypeButton,
+                                purchaseType === 'one-time' && { backgroundColor: themeColors.surface, ...shadows.sm }
+                            ]}
+                        >
+                            <Text style={[
+                                styles.purchaseTypeText,
+                                { color: purchaseType === 'one-time' ? colors.primary : themeColors.textSecondary }
+                            ]}>
+                                {t('one_time')}
+                            </Text>
+                        </Pressable>
                     </View>
                 </View>
 
@@ -617,5 +661,21 @@ const styles = StyleSheet.create({
     },
     footer: {
         height: spacing.xxl,
+    },
+    purchaseTypeSelector: {
+        flexDirection: 'row',
+        borderRadius: radius.md,
+        padding: spacing.xs,
+        marginBottom: spacing.lg,
+    },
+    purchaseTypeButton: {
+        flex: 1,
+        paddingVertical: spacing.sm,
+        borderRadius: radius.sm,
+        alignItems: 'center',
+    },
+    purchaseTypeText: {
+        fontSize: typography.sm,
+        fontWeight: typography.medium,
     },
 });

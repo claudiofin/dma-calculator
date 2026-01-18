@@ -36,7 +36,12 @@
       "startUrl": "/"
     },
     "plugins": [
-      "expo-router",
+      [
+        "expo-router",
+        {
+          "origin": "https://claudiocavalli.github.io/dma-calculator"
+        }
+      ],
       "expo-localization",
       [
         "expo-splash-screen",

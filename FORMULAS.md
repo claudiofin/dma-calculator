@@ -26,6 +26,7 @@ The calculator supports 3 distribution models for each store:
 | `userAgeMonths` | Number | Months since user installation |
 | `isSmallBusiness` | Boolean | Annual revenue < €1M |
 | `isSubscriptionAfterYear` | Boolean | Subscription after the first year |
+| `purchaseType` | "subscription" / "one-time" | Affects Google Tier 2 fees |
 
 ---
 
@@ -158,20 +159,21 @@ Cost = Adjusted Revenue × Rate
 
 | Component | Rate | Notes |
 |-----------|------|-------|
-| Ongoing Services Fee (Tier 1 + Tier 2) | **20%** | 10% base + 10% additional |
+| Ongoing Services Fee (Tier 1 + Tier 2) | **13%** or **20%** | 10% base + (3% subs OR 10% one-time) |
 | Initial Acquisition Fee (IAF) | **3%** | For 6 months from installation |
 | Payment Processor (Stripe, etc.) | **~2.9%** | External cost |
 
 **Tier 2 Total Formula:**
 ```
-Rate = 20% (Services) + [3% IAF if userAgeMonths < 6] + 2.9% (Payment)
+Tier 2 Fee = 3% (if Subscription) OR 10% (if One-time)
+Rate = 10% (Tier 1) + Tier 2 Fee + [3% IAF if userAgeMonths < 6] + 2.9% (Payment)
 Cost = Adjusted Revenue × Rate
 ```
 
-| Scenario | Total Rate |
-|----------|------------|
-| New user (< 6 months) | **25.9%** |
-| Existing user (≥ 6 months) | **22.9%** |
+| Scenario | Total Rate (Subs) | Total Rate (One-time) |
+|----------|-------------------|-----------------------|
+| New user (< 6 months) | **18.9%** | **25.9%** |
+| Existing user (≥ 6 months) | **15.9%** | **22.9%** |
 
 ---
 
@@ -191,7 +193,7 @@ Cost = Adjusted Revenue × Rate
 |-------|----------|----------|-------|
 | IAP Standard | 15% | 30% | Small Business or Year 2+ vs Standard |
 | External Tier 1 | 12.9% | 15.9% | + conversion drop |
-| External Tier 2 | 22.9% | 25.9% | + conversion drop |
+| External Tier 2 | 15.9% / 22.9% | 18.9% / 25.9% | varies by purchase type |
 
 ---
 

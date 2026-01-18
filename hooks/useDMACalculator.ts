@@ -9,6 +9,7 @@ export interface CalculatorInputs {
     userAgeMonths: number; // Months since install
     isSmallBusiness: boolean; // Annual revenue < 1M
     isSubscriptionAfterYear?: boolean; // After 1st year: 15% instead of 30%
+    purchaseType?: 'subscription' | 'one-time'; // Affects Google Tier 2 fees
 }
 
 export interface CalculationResult {
@@ -30,7 +31,8 @@ export const useDMACalculator = (inputs: CalculatorInputs) => {
         conversionImpact,
         userAgeMonths,
         isSmallBusiness,
-        isSubscriptionAfterYear = false
+        isSubscriptionAfterYear = false,
+        purchaseType = 'subscription'
     } = inputs;
 
     // Base revenue metrics for reference (using global inputs)
@@ -166,9 +168,11 @@ export const useDMACalculator = (inputs: CalculatorInputs) => {
                 iafRate = 3;
             }
 
-            let serviceRate = 10;
+            let serviceRate = 10; // Tier 1 base
             if (isTier2) {
-                serviceRate = 20; // Tier 1 (10%) + Tier 2 (10%) - Corrected to 20%
+                // Tier 2 fee: +3% for subscriptions, +10% for one-time purchases
+                const tier2Fee = purchaseType === 'subscription' ? 3 : 10;
+                serviceRate = 10 + tier2Fee; // 13% for subs, 20% for one-time
             }
 
             commissionRate = serviceRate + iafRate + PAYMENT_PROCESSOR_FEE;

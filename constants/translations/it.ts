@@ -21,6 +21,10 @@ export const it = {
     small_business_warning: '⚠️ Fatturato > 1M$. Non dovresti essere Small Business.',
     subscription_after_year: 'Abbonamento dopo 1° anno',
     subscription_after_year_desc: 'IAP scende al 15% dopo il primo anno',
+    purchase_type: 'Tipo di Acquisto',
+    subscription: 'Abbonamento',
+    one_time: 'Acquisto Singolo',
+    purchase_type_desc: 'Influisce su Google Tier 2 (+3% o +10%)',
     users: 'utenti',
 
     // Stores

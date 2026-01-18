@@ -21,6 +21,10 @@ export const de = {
     small_business_warning: '⚠️ Umsatz > 1M$. Small Business könnte nicht qualifiziert sein.',
     subscription_after_year: 'Abo nach dem 1. Jahr',
     subscription_after_year_desc: 'IAP sinkt auf 15% nach dem ersten Jahr',
+    purchase_type: 'Kaufart',
+    subscription: 'Abo',
+    one_time: 'Einmalkauf',
+    purchase_type_desc: 'Beeinflusst Google Tier 2 Gebühren (+3% oder +10%)',
     users: 'Nutzer',
 
     // Stores

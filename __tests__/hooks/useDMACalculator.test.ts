@@ -2,7 +2,7 @@
  * Unit tests for useDMACalculator hook
  * Tests all commission calculations for Apple and Google under DMA 2026
  */
-import { vi, describe, it, expect } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 // Mock i18n
 vi.mock('../../constants/i18n', () => ({
@@ -151,11 +151,22 @@ describe('useDMACalculator', () => {
     });
 
     describe('Google External Tier 2', () => {
-        it('should calculate Ongoing 20% + Stripe 2.9%', () => {
+        it('should calculate Ongoing 13% (Subscription) + Stripe 2.9%', () => {
+            // Default purchaseType is 'subscription'
             const { result } = renderHook(() => useDMACalculator(baseInputs));
             const googleResult = result.current.calculateGoogle('external-tier2');
 
-            // Ongoing Services 20% + Stripe 2.9% = 22.9%
+            // Ongoing Services 13% (10% Tier1 + 3% Tier2) + Stripe 2.9% = 15.9%
+            expect(googleResult.rate).toBe(15.9);
+        });
+
+        it('should calculate Ongoing 20% (One-Time) + Stripe 2.9%', () => {
+            const { result } = renderHook(() =>
+                useDMACalculator({ ...baseInputs, purchaseType: 'one-time' })
+            );
+            const googleResult = result.current.calculateGoogle('external-tier2');
+
+            // Ongoing Services 20% (10% Tier1 + 10% Tier2) + Stripe 2.9% = 22.9%
             expect(googleResult.rate).toBe(22.9);
         });
     });
